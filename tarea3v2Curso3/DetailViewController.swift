@@ -10,10 +10,17 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var foto: UIImageView!
 
-
-    var detailItem: AnyObject? {
+    @IBOutlet weak var lbTitulo: UILabel!
+    
+    @IBOutlet weak var lbIsbn: UILabel!
+    
+    @IBOutlet weak var lbAutores: UILabel!
+    
+    var detailItem: NSDictionary!
+    
+    /*? {
         didSet {
             // Update the view.
             self.configureView()
@@ -28,11 +35,26 @@ class DetailViewController: UIViewController {
             }
         }
     }
-
+*/
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.configureView()
+       // self.configureView()
+        
+        if detailItem != nil
+        {
+            let surl = detailItem.valueForKey("urlFotoPortada") as! String?
+            if surl != ""
+            {
+                let urlImg = NSURL(string: surl!)
+                let imagenData = NSData(contentsOfURL: urlImg!)
+                foto.image = UIImage(data: imagenData!)
+            }
+            
+            lbTitulo.text = (detailItem.valueForKey("titulo") as! String)
+            lbAutores.text = (detailItem.valueForKey("autores") as! String)
+            lbIsbn.text = (detailItem.valueForKey("isbn") as! String)
+        }
     }
 
     override func didReceiveMemoryWarning() {
